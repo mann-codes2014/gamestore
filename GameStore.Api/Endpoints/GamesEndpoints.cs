@@ -42,7 +42,7 @@ namespace GameStore.Api.Endpoints
                     Name = gameDto.Name,
                     Genre = gameDto.Genre,
                     Price = gameDto.Price,
-                    ReleaseDate = gameDto.ReleaseDate,
+                    ReleaseDate = gameDto.ReleaseDate.ToUniversalTime(),
                     ImageUri = gameDto.ImageUri,
 
                 };
@@ -60,7 +60,7 @@ namespace GameStore.Api.Endpoints
                 existingGame.Name = gameDto.Name;
                 existingGame.Genre = gameDto.Genre;
                 existingGame.Price = gameDto.Price;
-                existingGame.ReleaseDate = gameDto.ReleaseDate;
+                existingGame.ReleaseDate = gameDto.ReleaseDate.ToUniversalTime();
                 existingGame.ImageUri = gameDto.ImageUri;
                 repository.Update(existingGame);
                 return Results.NoContent();
