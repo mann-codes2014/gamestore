@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/ccb0f5fe-abf9-4e87-a37d-c0130b78a008/resourceGroups/gamestore_group/providers/Microsoft.Web/sites/gamestore",
+    "appService.deploySubpath": "GameStore.Api"
+}

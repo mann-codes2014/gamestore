@@ -17,7 +17,8 @@ public static class DataExtensions
     )
     {
         var connString = configuration.GetConnectionString("GameStoreContext");
-        services.AddSqlServer<GameStoreContext>(connString).AddScoped<IGamesRepository, EntityFrameworkRepository>();
+        services.AddDbContext<GameStoreContext>(options => options.UseNpgsql(connString));
+        services.AddScoped<IGamesRepository, EntityFrameworkRepository>();
         return services;
     }
 }
