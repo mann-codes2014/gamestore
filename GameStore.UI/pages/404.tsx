@@ -1,8 +1,10 @@
 import NotFound from "@layouts/404";
 import Base from "@layouts/Baseof";
 import { getRegularPage } from "@lib/contentParser";
+import { CommonPageProps } from "@lib/types";
+import { GetStaticProps } from "next";
 
-const notFound = ({ data }) => {
+const notFound = ({ data }:{data:CommonPageProps}) => {
   return (
     <Base>
       <NotFound data={data} />
@@ -11,7 +13,7 @@ const notFound = ({ data }) => {
 };
 
 // get 404 page data
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const notFoundData = await getRegularPage("404");
   return {
     props: {

@@ -4,9 +4,11 @@ import Base from "@layouts/Baseof";
 import Contact from "@layouts/Contact";
 import Default from "@layouts/Default";
 import { getRegularPage, getSinglePage } from "@lib/contentParser";
+import { CommonPageProps } from "@lib/types";
+import { GetStaticPaths, GetStaticProps } from "next/types";
 
 // for all regular pages
-const RegularPages = ({ data }) => {
+const RegularPages = ({ data }: { data: CommonPageProps }) => {
   const { title, meta_title, description, image, noindex, canonical, layout } =
     data.frontmatter;
   const { content } = data;
@@ -35,7 +37,7 @@ const RegularPages = ({ data }) => {
 export default RegularPages;
 
 // for regular page routes
-export const getStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const slugs = getSinglePage("content");
   const paths = slugs.map((item) => ({
     params: {
@@ -50,7 +52,7 @@ export const getStaticPaths = async () => {
 };
 
 // for regular page data
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }: any) => {
   const { regular } = params;
   const allPages = await getRegularPage(regular);
 

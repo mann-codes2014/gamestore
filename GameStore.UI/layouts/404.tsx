@@ -1,6 +1,7 @@
+import { CommonPageProps } from "@lib/types";
 import { markdownify } from "@lib/utils/textConverter";
 
-const NotFound = ({ data }) => {
+const NotFound = ({ data }:{data:CommonPageProps}) => {
   const { frontmatter, content } = data;
 
   return (

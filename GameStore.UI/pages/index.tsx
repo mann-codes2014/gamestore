@@ -2,50 +2,52 @@ import Base from "@layouts/Baseof";
 import Hero2 from "@layouts/components/Hero-2";
 import ImageFallback from "@layouts/components/ImageFallback";
 import { getListPage } from "@lib/contentParser";
-import { gsap } from "@lib/gsap";
+import { Feature } from "@lib/types";
+// import { gsap } from "@lib/gsap";
+import { GetStaticProps } from "next";
 import { useEffect, useRef } from "react";
 import { Autoplay, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 
-const Home = ({ games, features, brands }) => {
+const Home = ({ games, features, brands }:{games:string[],features:{list:Feature[]},brands:string[]}) => {
   const paginationRef = useRef(null);
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const banner = document.querySelector(".banner");
-      const header = document.querySelector(".header");
-      const tl = gsap.timeline();
+  // useEffect(() => {
+  //   const ctx = gsap.context(() => {
+  //     const banner = document.querySelector(".banner");
+  //     const header = document.querySelector(".header");
+  //     const tl = gsap.timeline();
 
-      tl.fromTo(
-        ".banner-title",
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, delay: 0.5 }
-      )
-        .fromTo(
-          ".banner-btn",
-          { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.5 },
-          ">-0.4"
-        )
-        .fromTo(
-          ".banner-img",
-          {
-            y: 20,
-            opacity: 0,
-          },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.5,
-          },
-          ">-.5"
-        );
+  //     tl.fromTo(
+  //       ".banner-title",
+  //       { y: 20, opacity: 0 },
+  //       { y: 0, opacity: 1, duration: 0.5, delay: 0.5 }
+  //     )
+  //       .fromTo(
+  //         ".banner-btn",
+  //         { y: 20, opacity: 0 },
+  //         { y: 0, opacity: 1, duration: 0.5 },
+  //         ">-0.4"
+  //       )
+  //       .fromTo(
+  //         ".banner-img",
+  //         {
+  //           y: 20,
+  //           opacity: 0,
+  //         },
+  //         {
+  //           y: 0,
+  //           opacity: 1,
+  //           duration: 0.5,
+  //         },
+  //         ">-.5"
+  //       );
 
 
-    });
+  //   });
 
-    return () => ctx.revert();
-  }, []);
+  //   return () => ctx.revert();
+  // }, []);
 
   return (
     <Base>
@@ -107,6 +109,7 @@ const Home = ({ games, features, brands }) => {
                     }}
                     // autoplay={{ delay: 3000 }}
                     onBeforeInit={(swiper) => {
+                      //@ts-ignore
                       swiper.params.pagination.el = paginationRef.current;
                     }}
                     modules={[Pagination]}
@@ -203,7 +206,7 @@ const Home = ({ games, features, brands }) => {
 export default Home;
 
 // for homepage data
-export const getStaticProps = async () => {
+export const getStaticProps:GetStaticProps = async () => {
   const homepage = await getListPage("content/_index.md");
   const { frontmatter } = homepage;
   const { banner, games, brands, features, intro, speciality, testimonial } =

@@ -1,5 +1,6 @@
 import config from "@config/config.json";
-import { gsap } from "@lib/gsap";
+import { BaseProps } from "@lib/types";
+// import { gsap } from "@lib/gsap";
 import { plainify } from "@lib/utils/textConverter";
 import Footer from "@partials/Footer";
 import Header from "@partials/Header";
@@ -15,69 +16,69 @@ const Base = ({
   noindex,
   canonical,
   children,
-}) => {
+}:BaseProps) => {
   const { meta_image, meta_author, meta_description } = config.metadata;
   const { base_url } = config.site;
   const router = useRouter();
-  const main = useRef();
+  const main:any = useRef();
 
   //gsap fade animation
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      //fade
-      const fadeElements = document.querySelectorAll(".fade");
-      fadeElements.forEach((el) => {
-        gsap.to(el, {
-          opacity: 1,
-          scrollTrigger: el,
-          duration: 0.3,
-        });
-      });
+  // useEffect(() => {
+  //   const ctx = gsap.context(() => {
+  //     //fade
+  //     const fadeElements = document.querySelectorAll(".fade");
+  //     fadeElements.forEach((el) => {
+  //       gsap.to(el, {
+  //         opacity: 1,
+  //         scrollTrigger: el,
+  //         duration: 0.3,
+  //       });
+  //     });
 
-      //gsap animation
-      const elements = document.querySelectorAll(".animate");
-      elements.forEach((el) => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: el,
-            start: "top bottom",
-            // markers: true,
-          },
-        });
+  //     //gsap animation
+  //     const elements = document.querySelectorAll(".animate");
+  //     elements.forEach((el) => {
+  //       const tl = gsap.timeline({
+  //         scrollTrigger: {
+  //           trigger: el,
+  //           start: "top bottom",
+  //           // markers: true,
+  //         },
+  //       });
 
-        if (el.classList.contains("from-left")) {
-          tl.from(el, {
-            opacity: 0,
-            x: -100,
-          });
-        } else if (el.classList.contains("from-right")) {
-          tl.from(el, {
-            opacity: 0,
-            x: 100,
-          });
-        } else {
-          tl.from(el, {
-            opacity: 0,
-            y: 100,
-          });
-        }
-      });
+  //       if (el.classList.contains("from-left")) {
+  //         tl.from(el, {
+  //           opacity: 0,
+  //           x: -100,
+  //         });
+  //       } else if (el.classList.contains("from-right")) {
+  //         tl.from(el, {
+  //           opacity: 0,
+  //           x: 100,
+  //         });
+  //       } else {
+  //         tl.from(el, {
+  //           opacity: 0,
+  //           y: 100,
+  //         });
+  //       }
+  //     });
 
-      //background animation
-      const animatedBgs = document.querySelectorAll(".bg-theme");
-      animatedBgs.forEach((bg) => {
-        gsap.to(bg, {
-          scrollTrigger: {
-            trigger: bg,
-            toggleClass: "bg-animate",
-            once: true,
-          },
-        });
-      });
-    }, main);
+  //     //background animation
+  //     const animatedBgs = document.querySelectorAll(".bg-theme");
+  //     animatedBgs.forEach((bg) => {
+  //       gsap.to(bg, {
+  //         scrollTrigger: {
+  //           trigger: bg,
+  //           toggleClass: "bg-animate",
+  //           once: true,
+  //         },
+  //       });
+  //     });
+  //   }, main);
 
-    return () => ctx.revert();
-  }, []);
+  //   return () => ctx.revert();
+  // }, []);
 
   return (
     <>

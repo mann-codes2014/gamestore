@@ -6,8 +6,8 @@ function Cta() {
 
   return (
     <>
-      <h1 class="mb-16 text-white text-5xl font-bold tracking-tight md:text-6xl xl:text-7xl">
-        The best offer on the market <br /><span class="text-danger dark:text-danger-400">for your business</span>
+      <h1 className="mb-16 text-white text-5xl font-bold tracking-tight md:text-6xl xl:text-7xl">
+        The best offer on the market <br /><span className="text-danger dark:text-danger-400">for your business</span>
       </h1>
       <a className="mb-2 inline-block rounded bg-danger px-12 pt-4 pb-3.5 text-sm font-medium uppercase leading-normal text-white  bg-primary md:mr-2 md:mb-0"
         data-te-ripple-init data-te-ripple-color="light" href="#!" role="button">Get started</a>
