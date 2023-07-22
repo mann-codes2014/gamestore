@@ -53,7 +53,7 @@ interface Office {
   content: string;
   countries: object[];
 }
-interface Frontmatter {
+export interface Frontmatter {
   title: string;
   about_us: AboutUs;
   works: Work;

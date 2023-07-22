@@ -31,7 +31,7 @@ import {
   IoMail,
 } from "react-icons/io5";
 
-const Social = ({ source, className }) => {
+const Social = ({ source, className }: any) => {
   const {
     facebook,
     twitter,

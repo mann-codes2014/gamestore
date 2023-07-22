@@ -1,11 +1,11 @@
-import Logo from "@components/Logo";
+"use client";
+
 import config from "@config/config.json";
 import menu from "@config/menu.json";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useRef, useState } from "react";
 import { CgClose } from "react-icons/cg";
-
 const Header = () => {
   // distructuring the main menu from menu object
   const { main } = menu;
@@ -16,17 +16,18 @@ const Header = () => {
   const headerRef = useRef(null);
   const [direction, setDirection] = useState(null);
 
-  const { asPath } = useRouter();
-
+  const pathname = usePathname()
   //sticky header
   useEffect(() => {
     const header = headerRef.current;
-    const headerHeight = header.clientHeight + 200;
+    //@ts-ignore
+    const headerHeight = header?.clientHeight + 200;
     let prevScroll = 0;
     window.addEventListener("scroll", () => {
       const scrollY = window.scrollY;
       scrollY > 0 ? setSticky(true) : setSticky(false);
       if (scrollY > headerHeight) {
+        //@ts-ignore
         prevScroll > scrollY ? setDirection(-1) : setDirection(1);
         prevScroll = scrollY;
       } else {
@@ -42,8 +43,9 @@ const Header = () => {
     <>
       <div className="header-height-fix"></div>
       <header
-        className={`header ${sticky && "header-sticky"} ${direction === 1 && "unpinned"
-          }`}
+        className={`header ${sticky && "header-sticky"} ${
+          direction === 1 && "unpinned"
+        }`}
         ref={headerRef}
       >
         <nav className="navbar container-xl">
@@ -53,8 +55,9 @@ const Header = () => {
 
           <ul
             id="nav-menu"
-            className={`navbar-nav order-2 w-full justify-center md:w-auto md:space-x-2 lg:order-1 lg:flex ${!showMenu && "hidden"
-              }`}
+            className={`navbar-nav order-2 w-full justify-center md:w-auto md:space-x-2 lg:order-1 lg:flex ${
+              !showMenu && "hidden"
+            }`}
           >
             {main.map((menu, i) => (
               <React.Fragment key={`menu-${i}`}>
@@ -71,8 +74,9 @@ const Header = () => {
                         <li className="nav-dropdown-item" key={`children-${i}`}>
                           <Link
                             href={child.url}
-                            className={`nav-dropdown-link block transition-all ${asPath === child.url && "active"
-                              }`}
+                            className={`nav-dropdown-link block transition-all ${
+                              pathname?.startsWith(child.url) && "active"
+                            }`}
                           >
                             {child.name}
                           </Link>
@@ -84,8 +88,9 @@ const Header = () => {
                   <li className="nav-item">
                     <Link
                       href={menu.url}
-                      className={`nav-link block ${asPath === menu.url && "active"
-                        }`}
+                      className={`nav-link block ${
+                        pathname?.startsWith(menu.url) && "active"
+                      }`}
                     >
                       {menu.name}
                     </Link>

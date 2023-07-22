@@ -19,6 +19,7 @@ export const markdownify = (
   const Tag = tag || "span";
   return (
     <Tag
+    //@ts-ignore
       className={className}
       dangerouslySetInnerHTML={{
         __html:

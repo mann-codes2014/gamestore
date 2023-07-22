@@ -2,7 +2,6 @@ import Social from "@components/Social";
 import config from "@config/config.json";
 import menu from "@config/menu.json";
 import social from "@config/social.json";
-import Logo from "@layouts/components/Logo";
 import { markdownify } from "@lib/utils/textConverter";
 import Link from "next/link";
 
@@ -14,7 +13,6 @@ const Footer = () => {
       <div className="container">
         <div className="row border-y border-border py-12">
           <div className="animate md:col-6 lg:col-3">
-            {/* <Logo /> */}
             {markdownify(footer_content, "p", "mt-3")}
           </div>
           <div className="animate mt-8 md:col-6 lg:col-3 lg:mt-0">

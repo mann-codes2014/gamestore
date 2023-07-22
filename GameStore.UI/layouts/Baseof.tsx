@@ -1,12 +1,12 @@
+'use client';
+
 import config from "@config/config.json";
 import { BaseProps } from "@lib/types";
-// import { gsap } from "@lib/gsap";
 import { plainify } from "@lib/utils/textConverter";
 import Footer from "@partials/Footer";
 import Header from "@partials/Header";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useEffect, useRef } from "react";
+import { useRouter } from 'next/navigation';
+import { useRef } from "react";
 
 const Base = ({
   title,
@@ -16,73 +16,15 @@ const Base = ({
   noindex,
   canonical,
   children,
-}:BaseProps) => {
+}: BaseProps) => {
   const { meta_image, meta_author, meta_description } = config.metadata;
   const { base_url } = config.site;
   const router = useRouter();
-  const main:any = useRef();
-
-  //gsap fade animation
-  // useEffect(() => {
-  //   const ctx = gsap.context(() => {
-  //     //fade
-  //     const fadeElements = document.querySelectorAll(".fade");
-  //     fadeElements.forEach((el) => {
-  //       gsap.to(el, {
-  //         opacity: 1,
-  //         scrollTrigger: el,
-  //         duration: 0.3,
-  //       });
-  //     });
-
-  //     //gsap animation
-  //     const elements = document.querySelectorAll(".animate");
-  //     elements.forEach((el) => {
-  //       const tl = gsap.timeline({
-  //         scrollTrigger: {
-  //           trigger: el,
-  //           start: "top bottom",
-  //           // markers: true,
-  //         },
-  //       });
-
-  //       if (el.classList.contains("from-left")) {
-  //         tl.from(el, {
-  //           opacity: 0,
-  //           x: -100,
-  //         });
-  //       } else if (el.classList.contains("from-right")) {
-  //         tl.from(el, {
-  //           opacity: 0,
-  //           x: 100,
-  //         });
-  //       } else {
-  //         tl.from(el, {
-  //           opacity: 0,
-  //           y: 100,
-  //         });
-  //       }
-  //     });
-
-  //     //background animation
-  //     const animatedBgs = document.querySelectorAll(".bg-theme");
-  //     animatedBgs.forEach((bg) => {
-  //       gsap.to(bg, {
-  //         scrollTrigger: {
-  //           trigger: bg,
-  //           toggleClass: "bg-animate",
-  //           once: true,
-  //         },
-  //       });
-  //     });
-  //   }, main);
-
-  //   return () => ctx.revert();
-  // }, []);
+  const main: any = useRef();
 
   return (
     <>
-      <Head>
+      <head>
         {/* title */}
         <title>
           {plainify(
@@ -121,7 +63,7 @@ const Base = ({
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
-          content={`${base_url}/${router.asPath.replace("/", "")}`}
+          content={`${base_url}/${router.replace("/")}`}
         />
 
         {/* twitter-title */}
@@ -150,7 +92,7 @@ const Base = ({
           content={`${base_url}${image ? image : meta_image}`}
         />
         <meta name="twitter:card" content="summary_large_image" />
-      </Head>
+      </head>
       <Header />
       {/* main site */}
       <main ref={main}>{children}</main>
