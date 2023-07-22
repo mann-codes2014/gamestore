@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 @layer base {
   @import "base";
@@ -17,8 +17,9 @@
 }
 
 @layer swiper {
-  @import '../node_modules/swiper/swiper.scss';
+  @import 'swiper/scss';
   @import 'swiper/scss/pagination';
+  @import 'swiper/scss/autoplay';
   @import './swiper.scss';
 }
 

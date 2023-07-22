@@ -1,0 +1,65 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "resolveJsonModule": true,
+    "target": "esnext",
+    "module": "esnext",
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "paths": {
+      "@layouts/*": [
+        "layouts/*"
+      ],
+      "@components/*": [
+        "layouts/components/*"
+      ],
+      "@partials/*": [
+        "layouts/partials/*"
+      ],
+      "@shortcodes/*": [
+        "layouts/shortcodes/*"
+      ],
+      "@config/*": [
+        "config/*"
+      ],
+      "@json/*": [
+        "json/*"
+      ],
+      "@hooks/*": [
+        "hooks/*"
+      ],
+      "@lib/*": [
+        "lib/*"
+      ]
+    },
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    ".next"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "next.config.js",
+    ".next/types/**/*.ts"
+, "tailwind.config.js", "postcss.config.js"  ]
+}
