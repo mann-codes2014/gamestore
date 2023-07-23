@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // import Swiper required modules
 import { Typography } from "@layouts/components";
 import { Autoplay, Pagination } from "swiper";
+import Genre from "@layouts/components/Genre";
 const Home = ({
   games = SAMPLE_DATA.games,
   features = SAMPLE_DATA.features,
@@ -127,6 +128,7 @@ const Home = ({
                 </div>
               </div>
             </div>
+            <Genre/>
       </section>
     </>
   );
