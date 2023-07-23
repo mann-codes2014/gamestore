@@ -1,57 +1,37 @@
-import Social from "@components/Social";
+
+"use client";
 import config from "@config/config.json";
-import menu from "@config/menu.json";
-import social from "@config/social.json";
-import { markdownify } from "@lib/utils/textConverter";
-import Link from "next/link";
+import { Typography } from "@layouts/components";
 
 const Footer = () => {
-  const { copyright, footer_content } = config.params;
   const { email, phone, location } = config.contact_info;
   return (
-    <footer className="">
-      <div className="container">
-        <div className="row border-y border-border py-12">
-          <div className="animate md:col-6 lg:col-3">
-            {markdownify(footer_content, "p", "mt-3")}
-          </div>
-          <div className="animate mt-8 md:col-6 lg:col-3 lg:mt-0">
-            <h3 className="h5">Socials</h3>
-            <div className="mt-5">
-              {email && <Link href={`mailto:${email}`}>{email}</Link>}
-              {/* social icons */}
-              <Social source={social} className="social-icons mt-5" />
-            </div>
-          </div>
-          <div className="animate mt-8 md:col-6 lg:col-3 lg:mt-0">
-            <h3 className="h5">Quick Links</h3>
-            {/* footer menu */}
-            <ul className="mt-5 leading-10">
-              {menu.footer.map((menu) => (
-                <li key={menu.name}>
-                  <Link
-                    href={menu.url}
-                    className=" hover:text-primary hover:underline"
-                  >
-                    {menu.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="animate mt-8 md:col-6 lg:col-3 lg:mt-0">
-            <h3 className="h5">Location & Contact</h3>
-            <ul className="mt-5 leading-10">
-              <li>{markdownify(location)}</li>
-              {phone && (
-                <li>
-                  <Link href={`tel:${phone}`}>{phone}</Link>
-                </li>
-              )}
-            </ul>
-          </div>
-        </div>
-      </div>
+    <footer className="flex w-full flex-column md:flex-row flex-wrap items-center align-ceneter justify-center gap-x-12 gap-y-6 border-t border-blue-gray-50 py-6 px-4 text-center md:justify-between">
+      <Typography color="blue-gray" className="font-normal">
+        &copy; GameStore
+      </Typography>
+      <ul className="flex flex-wrap justify-center gap-x-8 gap-y-2">
+        <li>
+          <Typography
+            as="a"
+            href={`mailto:${email}`}
+            color="blue-gray"
+            className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+          >
+            {email}
+          </Typography>
+        </li>
+        <li>
+          <Typography
+            as="a"
+            href={`tel:${phone}`}
+            color="blue-gray"
+            className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
+          >
+            {phone}
+          </Typography>
+        </li>
+      </ul>
     </footer>
   );
 };

@@ -1,14 +1,15 @@
 "use client";
 
-import Base from "@layouts/Baseof";
 import Hero from "@layouts/components/Hero";
 import ImageFallback from "@layouts/components/ImageFallback";
 import { Feature } from "@lib/types";
 import SAMPLE_DATA from "content/index.json";
 import { useRef } from "react";
 // Import Swiper React components
-import { Autoplay, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+// import Swiper required modules
+import { Typography } from "@layouts/components";
+import { Autoplay, Pagination } from "swiper";
 const Home = ({
   games = SAMPLE_DATA.games,
   features = SAMPLE_DATA.features,
@@ -18,56 +19,59 @@ const Home = ({
   features: { list: Feature[] };
   brands: string[];
 }) => {
-  console.log({ brands });
   const paginationRef = useRef(null);
   return (
-    <Base>
-      <section className="section banner pt-0">
-        <div className="container-xl">
-          <div className="relative">
-            <div className="row">
-              <Hero />
-            </div>
-            <div className="row border-y border-border py-5 ">
-              <div className="col-12 text-center">
-                <h3>Our Partners</h3>
-              </div>
-              <div className="animate from-right col-12">
-                <Swiper
-                  loop={true}
-                  slidesPerView={3}
-                  breakpoints={{
-                    992: {
-                      slidesPerView: 4,
-                    },
-                  }}
-                  spaceBetween={20}
-                  modules={[Autoplay]}
-                  autoplay={{ delay: 3000 }}
+    <>
+      <section className="conatiner mx-auto p-8">
+        <div>
+          <Hero />
+        </div>
+        <div className="flex flex-col content-center text-center">
+          <div>
+          <Typography variant="h4">Our Partners</Typography>
+          </div>
+          <div className="flex flex-row">
+            <Swiper
+              loop={true}
+              slidesPerView={3}
+              breakpoints={{
+                992: {
+                  slidesPerView: 4,
+                },
+                640: {
+                  slidesPerView: 3,
+                },
+                300: {
+                  slidesPerView: 1,
+                },
+              }}
+              spaceBetween={20}
+              modules={[Autoplay]}
+              autoplay={{ delay: 3000 }}
+            >
+              {brands?.map((brand, index) => (
+                <SwiperSlide
+                  className="h-20 cursor-pointer px-6 py-6 grayscale  transition hover:grayscale-0 lg:px-10"
+                  key={"brand-" + index}
                 >
-                  {brands?.map((brand, index) => (
-                    <SwiperSlide
-                      className="h-20 cursor-pointer px-6 py-6 grayscale  transition hover:grayscale-0 lg:px-10"
-                      key={"brand-" + index}
-                    >
-                      <div className="relative h-[30px]">
-                        <ImageFallback
-                          src={brand}
-                          fill
-                          alt=""
-                          sizes="100vw"
-                          style={{
-                            objectFit: "contain",
-                          }}
-                          priority={true}
-                        />
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-            </div>
-            <div className="row overflow-hidden rounded-2xl">
+                  <div className="relative h-[30px]">
+                    <ImageFallback
+                      src={brand}
+                      fill
+                      alt=""
+                      sizes="100vw"
+                      style={{
+                        objectFit: "contain",
+                      }}
+                      priority={true}
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </div>
+        <div className="row overflow-hidden rounded-2xl">
               <div className="col-12">
                 <div className="animate from-right relative mt-2">
                   <Swiper
@@ -118,15 +122,13 @@ const Home = ({
                     ))}
                   </Swiper>
                   <div className="relative mt-9 flex justify-center">
-                    <div className="pagination " ref={paginationRef}></div>
+                    <div className="pagination" ref={paginationRef}></div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
       </section>
-    </Base>
+    </>
   );
 };
 

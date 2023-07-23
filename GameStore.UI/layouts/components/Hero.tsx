@@ -12,7 +12,7 @@ function Hero() {
           loop
         ></video>
       </div>
-      <div className="video-content space-y-2">
+      <div className="z-20 space-y-2">
         <Cta />
       </div>
     </section>

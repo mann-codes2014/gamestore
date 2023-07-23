@@ -1,154 +1,134 @@
 "use client";
 
-import config from "@config/config.json";
-import menu from "@config/menu.json";
-import Link from "next/link";
-import { usePathname } from 'next/navigation';
-import React, { useEffect, useRef, useState } from "react";
-import { CgClose } from "react-icons/cg";
+import {
+  Button,
+  IconButton,
+  MobileNav,
+  Navbar,
+  Typography,
+} from "@layouts/components";
+import React from "react";
 const Header = () => {
-  // distructuring the main menu from menu object
-  const { main } = menu;
+  const [openNav, setOpenNav] = React.useState(false);
 
-  // states declaration
-  const [showMenu, setShowMenu] = useState(false);
-  const [sticky, setSticky] = useState(false);
-  const headerRef = useRef(null);
-  const [direction, setDirection] = useState(null);
-
-  const pathname = usePathname()
-  //sticky header
-  useEffect(() => {
-    const header = headerRef.current;
-    //@ts-ignore
-    const headerHeight = header?.clientHeight + 200;
-    let prevScroll = 0;
-    window.addEventListener("scroll", () => {
-      const scrollY = window.scrollY;
-      scrollY > 0 ? setSticky(true) : setSticky(false);
-      if (scrollY > headerHeight) {
-        //@ts-ignore
-        prevScroll > scrollY ? setDirection(-1) : setDirection(1);
-        prevScroll = scrollY;
-      } else {
-        setDirection(null);
-      }
-    });
+  React.useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => window.innerWidth >= 960 && setOpenNav(false)
+    );
   }, []);
 
-  // logo source
-  const { logo } = config.site;
+  const navList = (
+    <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="#" className="flex items-center">
+          Pages
+        </a>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="#" className="flex items-center">
+          Account
+        </a>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="#" className="flex items-center">
+          Blocks
+        </a>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal"
+      >
+        <a href="#" className="flex items-center">
+          Docs
+        </a>
+      </Typography>
+    </ul>
+  );
 
   return (
     <>
-      <div className="header-height-fix"></div>
-      <header
-        className={`header ${sticky && "header-sticky"} ${
-          direction === 1 && "unpinned"
-        }`}
-        ref={headerRef}
-      >
-        <nav className="navbar container-xl">
-          <div className="order-0">
-            <h3>GameStore</h3>
-          </div>
-
-          <ul
-            id="nav-menu"
-            className={`navbar-nav order-2 w-full justify-center md:w-auto md:space-x-2 lg:order-1 lg:flex ${
-              !showMenu && "hidden"
-            }`}
+      <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
+        <div className="flex items-center justify-between text-blue-gray-900">
+          <Typography
+            as="a"
+            href="#"
+            className="mr-4 cursor-pointer py-1.5 font-medium"
           >
-            {main.map((menu, i) => (
-              <React.Fragment key={`menu-${i}`}>
-                {menu.hasChildren ? (
-                  <li className="nav-item nav-dropdown group relative">
-                    <span className="nav-link inline-flex items-center">
-                      {menu.name}
-                      <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                      </svg>
-                    </span>
-                    <ul className="nav-dropdown-list hidden max-h-0 w-full overflow-hidden border border-border-secondary py-0 transition-all duration-500 group-hover:block group-hover:max-h-[106px] group-hover:py-2 lg:invisible lg:absolute lg:left-1/2 lg:block lg:w-auto lg:-translate-x-1/2 lg:group-hover:visible lg:group-hover:opacity-100">
-                      {menu.children.map((child, i) => (
-                        <li className="nav-dropdown-item" key={`children-${i}`}>
-                          <Link
-                            href={child.url}
-                            className={`nav-dropdown-link block transition-all ${
-                              pathname?.startsWith(child.url) && "active"
-                            }`}
-                          >
-                            {child.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                ) : (
-                  <li className="nav-item">
-                    <Link
-                      href={menu.url}
-                      className={`nav-link block ${
-                        pathname?.startsWith(menu.url) && "active"
-                      }`}
-                    >
-                      {menu.name}
-                    </Link>
-                  </li>
-                )}
-              </React.Fragment>
-            ))}
-            {config.nav_button.enable && (
-              <li className="nav-item lg:hidden">
-                <Link
-                  className="btn btn-primary hidden lg:flex"
-                  href={config.nav_button.link}
-                >
-                  {config.nav_button.label}
-                </Link>
-              </li>
-            )}
-          </ul>
-          <div className="order-1 ml-auto flex items-center md:ml-0">
-            {config.nav_button.enable && (
-              <Link
-                className="btn btn-primary hidden lg:flex"
-                href={config.nav_button.link}
-              >
-                {config.nav_button.label}
-              </Link>
-            )}
-
-            {/* navbar toggler */}
-            {showMenu ? (
-              <button
-                className="h-8 w-8 text-3xl text-dark lg:hidden"
-                onClick={() => setShowMenu(!showMenu)}
-              >
-                <CgClose />
-              </button>
-            ) : (
-              <button
-                className="text-dark lg:hidden"
-                onClick={() => setShowMenu(!showMenu)}
-              >
+            GameStore
+          </Typography>
+          <div className="flex items-center gap-4">
+            <div className="mr-4 hidden lg:block">{navList}</div>
+            <Button
+              variant="gradient"
+              size="sm"
+              className="hidden lg:inline-block"
+            >
+              <span>Buy Now</span>
+            </Button>
+            <IconButton
+              variant="text"
+              className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+              ripple={false}
+              onClick={() => setOpenNav(!openNav)}
+            >
+              {openNav ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 32 32"
-                  width="32px"
-                  height="32px"
+                  fill="none"
+                  className="h-6 w-6"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
                 >
                   <path
-                    fill="currentColor"
-                    d="M 5 5 L 5 11 L 11 11 L 11 5 L 5 5 z M 13 5 L 13 11 L 19 11 L 19 5 L 13 5 z M 21 5 L 21 11 L 27 11 L 27 5 L 21 5 z M 7 7 L 9 7 L 9 9 L 7 9 L 7 7 z M 15 7 L 17 7 L 17 9 L 15 9 L 15 7 z M 23 7 L 25 7 L 25 9 L 23 9 L 23 7 z M 5 13 L 5 19 L 11 19 L 11 13 L 5 13 z M 13 13 L 13 19 L 19 19 L 19 13 L 13 13 z M 21 13 L 21 19 L 27 19 L 27 13 L 21 13 z M 7 15 L 9 15 L 9 17 L 7 17 L 7 15 z M 15 15 L 17 15 L 17 17 L 15 17 L 15 15 z M 23 15 L 25 15 L 25 17 L 23 17 L 23 15 z M 5 21 L 5 27 L 11 27 L 11 21 L 5 21 z M 13 21 L 13 27 L 19 27 L 19 21 L 13 21 z M 21 21 L 21 27 L 27 27 L 27 21 L 21 21 z M 7 23 L 9 23 L 9 25 L 7 25 L 7 23 z M 15 23 L 17 23 L 17 25 L 15 25 L 15 23 z"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
-              </button>
-            )}
-            {/* /navbar toggler */}
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              )}
+            </IconButton>
           </div>
-        </nav>
-      </header>
+        </div>
+        <MobileNav open={openNav}>
+          {navList}
+          <Button variant="gradient" size="sm" fullWidth className="mb-2">
+            <span>Buy Now</span>
+          </Button>
+        </MobileNav>
+      </Navbar>
     </>
   );
 };
